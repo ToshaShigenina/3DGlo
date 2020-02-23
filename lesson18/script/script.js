@@ -45,14 +45,38 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const toggleMenu = () => {
     const btnMenu = document.querySelictor('.menu'),
-      menu = document.querySelector('menu');
+      menu = document.querySelector('menu'),
+      btnClose = document.querySelector('.close-btn'),
+      menuItems = menu.querySelectorAll('ul>li');
 
+    const handlerMenu = () => {
+      menu.classList.toggle('active-menu');
+    };
 
-
-
+    btnMenu.addEventListener('click', handlerMenu);
+    btnClose.addEventListener('click', handlerMenu);
+    menuItems.forEach((item) => item.addEventListener('click', handlerMenu));
   };
 
   toggleMenu();
+
+  const togglePopUp = () => {
+    const popup = document.querySelector('.popup'),
+      btnPopup = document.querySelectorAll('.popup-btn'),
+      btnClose = document.querySelector('.popup-close');
+
+    btnPopup.forEach((elem) => {
+      elem.addEventListener('click', () => {
+        popup.style.display = 'block';
+      });
+    });
+
+    btnClose.addEventListener('click', () => {
+      popup.style.display = 'none';
+    });
+  };
+
+  togglePopUp();
 
 
 
