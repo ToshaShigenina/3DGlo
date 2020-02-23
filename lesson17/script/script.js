@@ -28,6 +28,29 @@ window.addEventListener('DOMContentLoaded', () => {
           seconds
         };
       },
+      dayTimer = () => {
+        const beautifyTime = (time) => {
+          if (time > 0 && time < 10) {
+            return `0${time}`;
+          } else if (time <= 0) {
+            return `00`;
+          }
+          return time;
+        };
+
+        let day = 24 * 60 * 60 * 1000;
+        const seconds = beautifyTime(Math.floor(day % 60)),
+          minutes = beautifyTime(Math.floor((day / 60) % 60)),
+          hours = beautifyTime(Math.floor(day / 60 / 60));
+
+        day--;
+
+        return {
+          hours,
+          minutes,
+          seconds
+        };
+      },
       updateClock = () => {
         const timer = getTimeRemaning();
 
@@ -39,6 +62,7 @@ window.addEventListener('DOMContentLoaded', () => {
     setInterval(updateClock, 1000);
   };
 
-  countTimer(`22 february 2020`);
+  countTimer(`25 february 2020`);
+  //dayTimer();
 
 });
