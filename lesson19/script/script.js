@@ -75,6 +75,7 @@ window.addEventListener('DOMContentLoaded', () => {
           }
         }
       } else {
+        menu.removeAttribute('style');
         menu.classList.toggle('active-menu');
       }
     };
@@ -85,7 +86,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     document.body.addEventListener('click', (event) => {
       let target = event.target;
-      target = target.closest('.menu') || target.closest('.close-btn');
+      target = target.closest('.menu');
 
       if (target) {
         handlerMenu();
