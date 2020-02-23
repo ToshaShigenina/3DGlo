@@ -39,20 +39,18 @@ window.addEventListener('DOMContentLoaded', () => {
     setInterval(updateClock, 1000);
   };
 
-  countTimer(`22 february 2020`);
+  countTimer(`25 february 2020`);
 
   //menu
 
   const toggleMenu = () => {
-    const btnMenu = document.querySelector('.menu'),
-      menu = document.querySelector('menu'),
-      btnClose = document.querySelector('.close-btn'),
+    const menu = document.querySelector('menu'),
       menuItems = menu.querySelectorAll('ul>li');
 
     let percent = -100;
 
     const animateMenu = () => {
-      let screenWidth = document.documentElement.clientWidth;
+      const screenWidth = document.documentElement.clientWidth;
 
       if (screenWidth > 768) {
         if (percent < 100) {
@@ -85,9 +83,27 @@ window.addEventListener('DOMContentLoaded', () => {
       requestAnimationFrame(animateMenu);
     };
 
-    btnMenu.addEventListener('click', handlerMenu);
-    btnClose.addEventListener('click', handlerMenu);
-    menuItems.forEach((item) => item.addEventListener('click', handlerMenu));
+    document.body.addEventListener('click', (event) => {
+      let target = event.target;
+      target = target.closest('.menu') || target.closest('.close-btn');
+
+      if (target) {
+        handlerMenu();
+      }
+    });
+
+    menu.addEventListener('click', (event) => {
+      let target = event.target;
+
+      if (target.classList.contains('close-btn')) {
+        handlerMenu();
+        return;
+      } else {
+        if (target.tagName === 'LI') {
+          handlerMenu();
+        }
+      }
+    });
   };
 
   toggleMenu();
@@ -96,8 +112,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const togglePopUp = () => {
     const popup = document.querySelector('.popup'),
-      btnPopup = document.querySelectorAll('.popup-btn'),
-      btnClose = document.querySelector('.popup-close');
+      btnPopup = document.querySelectorAll('.popup-btn');
 
     btnPopup.forEach((elem) => {
       elem.addEventListener('click', () => {
@@ -105,8 +120,18 @@ window.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    btnClose.addEventListener('click', () => {
-      popup.style.display = 'none';
+    popup.addEventListener('click', (event) => {
+      let target = event.target;
+
+      if (target.classList.contains('popup-close')) {
+        popup.style.display = 'none';
+      } else {
+        target = target.closest('.popup-content');
+
+        if (!target) {
+          popup.style.display = 'none';
+        }
+      }
     });
   };
 
@@ -134,16 +159,14 @@ window.addEventListener('DOMContentLoaded', () => {
     tabHeader.addEventListener('click', (event) => {
       let target = event.target;
 
-      while (target !== tabHeader) {
-        if (target.classList.contains('service-header-tab')) {
-          tab.forEach((item, i) => {
-            if (item === target) {
-              toggleTabContent(i);
-            }
-          });
-          return;
-        }
-        target = target.parentNode;
+      target = target.closest('.service-header-tab');
+
+      if (target) {
+        tab.forEach((item, i) => {
+          if (item === target) {
+            toggleTabContent(i);
+          }
+        });
       }
     });
   };
