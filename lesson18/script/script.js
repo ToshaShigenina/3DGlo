@@ -44,13 +44,45 @@ window.addEventListener('DOMContentLoaded', () => {
   //menu
 
   const toggleMenu = () => {
-    const btnMenu = document.querySelictor('.menu'),
+    const btnMenu = document.querySelector('.menu'),
       menu = document.querySelector('menu'),
       btnClose = document.querySelector('.close-btn'),
       menuItems = menu.querySelectorAll('ul>li');
 
+    let percent = -100;
+
+    const animateMenu = () => {
+      let screenWidth = document.documentElement.clientWidth;
+
+      if (screenWidth > 768) {
+        if (percent < 100) {
+          let timer = setInterval(() => {
+            if (percent < 100) {
+              percent += 2;
+              menu.style.transform = `translateX(${percent}%)`;
+            } else {
+              clearInterval(timer);
+            }
+          }, 20);
+        } else {
+          if (percent === 100) {
+            let timer = setInterval(() => {
+              if (percent > -100) {
+                percent -= 2;
+                menu.style.transform = `translateX(${percent}%)`;
+              } else {
+                clearInterval(timer);
+              }
+            }, 20);
+          }
+        }
+      } else {
+        menu.classList.toggle('active-menu');
+      }
+    };
+
     const handlerMenu = () => {
-      menu.classList.toggle('active-menu');
+      requestAnimationFrame(animateMenu);
     };
 
     btnMenu.addEventListener('click', handlerMenu);
@@ -59,6 +91,8 @@ window.addEventListener('DOMContentLoaded', () => {
   };
 
   toggleMenu();
+
+  //popup
 
   const togglePopUp = () => {
     const popup = document.querySelector('.popup'),
@@ -77,6 +111,8 @@ window.addEventListener('DOMContentLoaded', () => {
   };
 
   togglePopUp();
+
+
 
 
 
