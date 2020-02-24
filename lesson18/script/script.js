@@ -99,13 +99,40 @@ window.addEventListener('DOMContentLoaded', () => {
       btnPopup = document.querySelectorAll('.popup-btn'),
       btnClose = document.querySelector('.popup-close');
 
+    let opacity = 0;
+
+    const animatePopup = () => {
+      let screenWidth = document.documentElement.clientWidth;
+
+      popup.style.opacity = 0;
+
+      if (screenWidth > 768) {
+        if (opacity < 1) {
+
+          popup.style.display = 'block';
+
+          let animateStart = setInterval(() => {
+            if (opacity < 1) {
+              opacity += 0.02;
+              popup.style.opacity = opacity;
+            } else {
+              opacity = 0;
+              clearInterval(animateStart);
+            }
+          }, 10);
+
+        }
+      }
+    };
+
     btnPopup.forEach((elem) => {
       elem.addEventListener('click', () => {
-        popup.style.display = 'block';
+        requestAnimationFrame(animatePopup);
       });
     });
 
     btnClose.addEventListener('click', () => {
+      popup.style.opacity = 0;
       popup.style.display = 'none';
     });
   };
