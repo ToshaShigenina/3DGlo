@@ -1,26 +1,32 @@
 'use strict';
 window.addEventListener('DOMContentLoaded', () => {
 
-  const countTimer = (deadline) => {
+
+  const countTimer = () => {
     const timerHours = document.getElementById('timer-hours'),
       timerMinutes = document.getElementById('timer-minutes'),
       timerSeconds = document.getElementById('timer-seconds');
 
-    const getTimeRemaning = () => {
+    let day = 24 * 60 * 60; //24 hours
+
+    const dayTimer = () => {
+        day--;
+        if (day < 0) {
+          day = 24 * 60 * 60;
+        }
+
         const beautifyTime = (time) => {
-            if (time > 0 && time < 10) {
-              return `0${time}`;
-            } else if (time <= 0) {
-              return `00`;
-            }
-            return time;
-          },
-          dateStop = new Date(deadline).getTime(),
-          dateNow = new Date().getTime(),
-          timeRemaining = (dateStop - dateNow) / 1000,
-          seconds = beautifyTime(Math.floor(timeRemaining % 60)),
-          minutes = beautifyTime(Math.floor((timeRemaining / 60) % 60)),
-          hours = beautifyTime(Math.floor(timeRemaining / 60 / 60));
+          if (time > 0 && time < 10) {
+            return `0${time}`;
+          } else if (time <= 0) {
+            return `00`;
+          }
+          return time;
+        };
+
+        const seconds = beautifyTime(Math.floor(day % 60)),
+          minutes = beautifyTime(Math.floor((day / 60) % 60)),
+          hours = beautifyTime(Math.floor(day / 60 / 60));
 
         return {
           hours,
@@ -29,7 +35,7 @@ window.addEventListener('DOMContentLoaded', () => {
         };
       },
       updateClock = () => {
-        const timer = getTimeRemaning();
+        const timer = dayTimer();
 
         timerHours.textContent = timer.hours;
         timerMinutes.textContent = timer.minutes;
