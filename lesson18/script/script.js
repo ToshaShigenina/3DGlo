@@ -44,7 +44,7 @@ window.addEventListener('DOMContentLoaded', () => {
     setInterval(updateClock, 1000);
   };
 
-  countTimer(`22 february 2020`);
+  countTimer();
 
   //menu
 
@@ -104,35 +104,35 @@ window.addEventListener('DOMContentLoaded', () => {
       btnPopup = document.querySelectorAll('.popup-btn'),
       btnClose = document.querySelector('.popup-close');
 
-    let opacity = 0;
+    let opacity = 0,
+      animId = 0;
 
-    const animatePopup = () => {
+    const animatePopupStart = () => {
       let screenWidth = document.documentElement.clientWidth;
+      const animation = () => {
+        animId = requestAnimationFrame(animation);
+
+        popup.style.display = 'block';
+        if (opacity < 1) {
+          opacity += 0.02;
+          popup.style.opacity = opacity;
+        } else {
+          opacity = 0;
+          cancelAnimationFrame(animId);
+        }
+      }
 
       popup.style.opacity = 0;
 
       if (screenWidth > 768) {
-        if (opacity < 1) {
-
-          popup.style.display = 'block';
-
-          let animateStart = setInterval(() => {
-            if (opacity < 1) {
-              opacity += 0.02;
-              popup.style.opacity = opacity;
-            } else {
-              opacity = 0;
-              clearInterval(animateStart);
-            }
-          }, 10);
-
-        }
+        requestAnimationFrame(animation);
       }
     };
 
     btnPopup.forEach((elem) => {
       elem.addEventListener('click', () => {
-        requestAnimationFrame(animatePopup);
+        //requestAnimationFrame(animatePopupStart);
+        animatePopupStart();
       });
     });
 
