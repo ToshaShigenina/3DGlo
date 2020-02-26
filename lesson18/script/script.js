@@ -6,14 +6,11 @@ window.addEventListener('DOMContentLoaded', () => {
       timerMinutes = document.getElementById('timer-minutes'),
       timerSeconds = document.getElementById('timer-seconds');
 
-    let day = 24 * 60 * 60; //24 hours
+    let now = new Date(),
+      tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1),
+      timeRemaning = Math.floor(tomorrow.getTime() - now.getTime()) / 1000;
 
     const dayTimer = () => {
-        day--;
-        if (day < 0) {
-          day = 24 * 60 * 60;
-        }
-
         const beautifyTime = (time) => {
           if (time > 0 && time < 10) {
             return `0${time}`;
@@ -23,9 +20,9 @@ window.addEventListener('DOMContentLoaded', () => {
           return time;
         };
 
-        const seconds = beautifyTime(Math.floor(day % 60)),
-          minutes = beautifyTime(Math.floor((day / 60) % 60)),
-          hours = beautifyTime(Math.floor(day / 60 / 60));
+        const seconds = beautifyTime(Math.floor(timeRemaning % 60)),
+          minutes = beautifyTime(Math.floor((timeRemaning / 60) % 60)),
+          hours = beautifyTime(Math.floor(timeRemaning / 60 / 60));
 
         return {
           hours,
@@ -35,6 +32,7 @@ window.addEventListener('DOMContentLoaded', () => {
       },
       updateClock = () => {
         const timer = dayTimer();
+        timeRemaning--;
 
         timerHours.textContent = timer.hours;
         timerMinutes.textContent = timer.minutes;
