@@ -48,50 +48,27 @@ window.addEventListener('DOMContentLoaded', () => {
   //menu
 
   const toggleMenu = () => {
-    const btnMenu = document.querySelector('.menu'),
-      menu = document.querySelector('menu'),
-      btnClose = document.querySelector('.close-btn'),
-      menuItems = menu.querySelectorAll('ul>li');
-
-    let percent = -100;
-
-    const animateMenu = () => {
-      let screenWidth = document.documentElement.clientWidth;
-
-      if (screenWidth > 768) {
-        if (percent < 100) {
-          let timer = setInterval(() => {
-            if (percent < 100) {
-              percent += 2;
-              menu.style.transform = `translateX(${percent}%)`;
-            } else {
-              clearInterval(timer);
-            }
-          }, 20);
-        } else {
-          if (percent === 100) {
-            let timer = setInterval(() => {
-              if (percent > -100) {
-                percent -= 2;
-                menu.style.transform = `translateX(${percent}%)`;
-              } else {
-                clearInterval(timer);
-              }
-            }, 20);
-          }
-        }
-      } else {
-        menu.classList.toggle('active-menu');
-      }
-    };
+    const menu = document.querySelector('menu');
 
     const handlerMenu = () => {
-      requestAnimationFrame(animateMenu);
+      menu.classList.toggle('active-menu');
     };
 
-    btnMenu.addEventListener('click', handlerMenu);
-    btnClose.addEventListener('click', handlerMenu);
-    menuItems.forEach((item) => item.addEventListener('click', handlerMenu));
+    document.body.addEventListener('click', (event) => {
+      let target = event.target.closest('.menu');
+
+      if (target) {
+        handlerMenu();
+      }
+    });
+
+    menu.addEventListener('click', (event) => {
+      let target = event.target.closest('a');
+
+      if (target) {
+        handlerMenu();
+      }
+    });
   };
 
   toggleMenu();
@@ -149,6 +126,7 @@ window.addEventListener('DOMContentLoaded', () => {
   togglePopUp();
 
   /* scroll */
+
   const smoothScroll = () => {
     const menu = document.querySelector('menu'),
       serviceAnchor = document.querySelector('main a[href="#service-block"]');
@@ -181,7 +159,6 @@ window.addEventListener('DOMContentLoaded', () => {
   };
 
   smoothScroll();
-
 
   // tab
 
