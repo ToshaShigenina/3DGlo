@@ -86,17 +86,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const togglePopUp = () => {
     const popup = document.querySelector('.popup'),
-      btnPopup = document.querySelectorAll('.popup-btn'),
-      btnClose = document.querySelector('.popup-close');
+      btnPopup = document.querySelectorAll('.popup-btn');
 
     let opacity = 0,
       animId = 0;
 
     const animatePopupStart = () => {
-      let screenWidth = document.documentElement.clientWidth;
-
-      const animation = () => {
-        animId = requestAnimationFrame(animation);
+        animId = requestAnimationFrame(animatePopupStart);
 
         if (opacity < 1) {
           opacity += 0.02;
@@ -105,30 +101,39 @@ window.addEventListener('DOMContentLoaded', () => {
           opacity = 0;
           cancelAnimationFrame(animId);
         }
+      },
+      closePopup = () => {
+        opacity = 0;
+        popup.style.opacity = 0;
+        popup.style.display = 'none';
       };
-
-      popup.style.opacity = 0;
-      popup.style.display = 'block';
-
-      if (screenWidth > 768) {
-        requestAnimationFrame(animation);
-      } else {
-        opacity = 1;
-        popup.style.opacity = opacity;
-      }
-    };
 
     btnPopup.forEach((elem) => {
       elem.addEventListener('click', () => {
-        //requestAnimationFrame(animatePopupStart);
-        animatePopupStart();
+        popup.style.opacity = 0;
+        opacity = 0;
+        popup.style.display = 'block';
+        if (document.documentElement.clientWidth > 768) {
+          animId = requestAnimationFrame(animatePopupStart);
+        } else {
+          popup.style.opacity = 1;
+          opacity = 1;
+        }
       });
     });
 
-    btnClose.addEventListener('click', () => {
-      opacity = 0;
-      popup.style.opacity = 0;
-      popup.style.display = 'none';
+    popup.addEventListener('click', (event) => {
+      let target = event.target;
+
+      if (target.classList.contains('popup-close')) {
+        closePopup();
+      } else {
+        target = target.closest('.popup-content');
+
+        if (!target) {
+          closePopup();
+        }
+      }
     });
   };
 
