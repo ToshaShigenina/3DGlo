@@ -151,6 +151,15 @@ window.addEventListener('DOMContentLoaded', () => {
   const smoothScroll = () => {
     const menu = document.querySelector('menu');
 
+    const scrollToId = (anchor) => {
+      let elemId = target.getAttribute('href').slice(1);
+
+      document.getElementById(elemId).scrollIntoView({
+        block: "start",
+        behavior: "smooth"
+      });
+    };
+
     menu.addEventListener('click', (event) => {
       event.preventDefault();
       let target = event.target.closest('li>a[href^="#"]');
@@ -159,14 +168,10 @@ window.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      let elemId = target.getAttribute('href').slice(1);
-
-      document.getElementById(elemId).scrollIntoView({
-        block: "start",
-        behavior: "smooth"
-      });
-
+      scrollToId(target);
     });
+
+
   };
 
   smoothScroll();
