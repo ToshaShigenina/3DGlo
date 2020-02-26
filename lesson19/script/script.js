@@ -56,35 +56,28 @@ window.addEventListener('DOMContentLoaded', () => {
 
     document.body.addEventListener('click', (event) => {
       let target = event.target.closest('.menu') || event.target.closest('menu');
+      console.log(target);
 
-      if (!target) {
+      if (!target && menu.classList.contains('active-menu')) {
+        handlerMenu();
         return;
+      } else {
+        if (!target) {
+          return;
+        }
       }
 
       if (target.classList.contains('menu')) {
         handlerMenu();
       } else {
-        target = target.closest('a');
+        target = event.target.closest('a');
+
         if (target) {
           handlerMenu();
         }
       }
-
-
-      /*      let target = event.target.closest('.menu');
-
-            if (target) {
-              
-            }*/
     });
 
-    /*    menu.addEventListener('click', (event) => {
-          let target = event.target.closest('a');
-
-          if (target) {
-            handlerMenu();
-          }
-        });*/
   };
 
   toggleMenu();
