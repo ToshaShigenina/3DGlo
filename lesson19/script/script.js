@@ -7,14 +7,11 @@ window.addEventListener('DOMContentLoaded', () => {
       timerMinutes = document.getElementById('timer-minutes'),
       timerSeconds = document.getElementById('timer-seconds');
 
-    let day = 24 * 60 * 60; //24 hours
+    let now = new Date(),
+      tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1),
+      timeRemaning = Math.floor(tomorrow.getTime() - now.getTime()) / 1000;
 
     const dayTimer = () => {
-        day--;
-        if (day < 0) {
-          day = 24 * 60 * 60;
-        }
-
         const beautifyTime = (time) => {
           if (time > 0 && time < 10) {
             return `0${time}`;
@@ -24,9 +21,9 @@ window.addEventListener('DOMContentLoaded', () => {
           return time;
         };
 
-        const seconds = beautifyTime(Math.floor(day % 60)),
-          minutes = beautifyTime(Math.floor((day / 60) % 60)),
-          hours = beautifyTime(Math.floor(day / 60 / 60));
+        const seconds = beautifyTime(Math.floor(timeRemaning % 60)),
+          minutes = beautifyTime(Math.floor((timeRemaning / 60) % 60)),
+          hours = beautifyTime(Math.floor(timeRemaning / 60 / 60));
 
         return {
           hours,
@@ -36,6 +33,7 @@ window.addEventListener('DOMContentLoaded', () => {
       },
       updateClock = () => {
         const timer = dayTimer();
+        timeRemaning--;
 
         timerHours.textContent = timer.hours;
         timerMinutes.textContent = timer.minutes;
@@ -50,13 +48,15 @@ window.addEventListener('DOMContentLoaded', () => {
   //menu
 
   const toggleMenu = () => {
-    const menu = document.querySelector('menu'),
+    const btnMenu = document.querySelector('.menu'),
+      menu = document.querySelector('menu'),
+      btnClose = document.querySelector('.close-btn'),
       menuItems = menu.querySelectorAll('ul>li');
 
     let percent = -100;
 
     const animateMenu = () => {
-      const screenWidth = document.documentElement.clientWidth;
+      let screenWidth = document.documentElement.clientWidth;
 
       if (screenWidth > 768) {
         if (percent < 100) {
@@ -81,7 +81,6 @@ window.addEventListener('DOMContentLoaded', () => {
           }
         }
       } else {
-        menu.removeAttribute('style');
         menu.classList.toggle('active-menu');
       }
     };
@@ -90,27 +89,9 @@ window.addEventListener('DOMContentLoaded', () => {
       requestAnimationFrame(animateMenu);
     };
 
-    document.body.addEventListener('click', (event) => {
-      let target = event.target;
-      target = target.closest('.menu');
-
-      if (target) {
-        handlerMenu();
-      }
-    });
-
-    menu.addEventListener('click', (event) => {
-      let target = event.target;
-
-      if (target.classList.contains('close-btn')) {
-        handlerMenu();
-        return;
-      } else {
-        if (target.tagName === 'LI') {
-          handlerMenu();
-        }
-      }
-    });
+    btnMenu.addEventListener('click', handlerMenu);
+    btnClose.addEventListener('click', handlerMenu);
+    menuItems.forEach((item) => item.addEventListener('click', handlerMenu));
   };
 
   toggleMenu();
@@ -119,30 +100,88 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const togglePopUp = () => {
     const popup = document.querySelector('.popup'),
-      btnPopup = document.querySelectorAll('.popup-btn');
+      btnPopup = document.querySelectorAll('.popup-btn'),
+      btnClose = document.querySelector('.popup-close');
+
+    let opacity = 0,
+      animId = 0;
+
+    const animatePopupStart = () => {
+      let screenWidth = document.documentElement.clientWidth;
+
+      const animation = () => {
+        animId = requestAnimationFrame(animation);
+
+        if (opacity < 1) {
+          opacity += 0.02;
+          popup.style.opacity = opacity;
+        } else {
+          opacity = 0;
+          cancelAnimationFrame(animId);
+        }
+      }
+
+      popup.style.opacity = 0;
+      popup.style.display = 'block';
+
+      if (screenWidth > 768) {
+        requestAnimationFrame(animation);
+      } else {
+        opacity = 1;
+        popup.style.opacity = opacity;
+      }
+    };
 
     btnPopup.forEach((elem) => {
       elem.addEventListener('click', () => {
-        popup.style.display = 'block';
+        //requestAnimationFrame(animatePopupStart);
+        animatePopupStart();
       });
     });
 
-    popup.addEventListener('click', (event) => {
-      let target = event.target;
-
-      if (target.classList.contains('popup-close')) {
-        popup.style.display = 'none';
-      } else {
-        target = target.closest('.popup-content');
-
-        if (!target) {
-          popup.style.display = 'none';
-        }
-      }
+    btnClose.addEventListener('click', () => {
+      opacity = 0;
+      popup.style.opacity = 0;
+      popup.style.display = 'none';
     });
   };
 
   togglePopUp();
+
+  /* scroll */
+  const smoothScroll = () => {
+    const menu = document.querySelector('menu'),
+      serviceAnchor = document.querySelector('main a[href="#service-block"]');
+
+    const scrollToId = (anchor) => {
+      let elemId = anchor.getAttribute('href').slice(1);
+
+      document.getElementById(elemId).scrollIntoView({
+        block: "start",
+        behavior: "smooth"
+      });
+    };
+
+    menu.addEventListener('click', (event) => {
+      event.preventDefault();
+      let target = event.target.closest('li>a[href^="#"]');
+
+      if (!target) {
+        return;
+      }
+
+      scrollToId(target);
+    });
+
+    serviceAnchor.addEventListener('click', (event) => {
+      event.preventDefault();
+      scrollToId(serviceAnchor);
+    });
+
+  };
+
+  smoothScroll();
+
 
   // tab
 
