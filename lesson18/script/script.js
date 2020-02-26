@@ -107,10 +107,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const animatePopupStart = () => {
       let screenWidth = document.documentElement.clientWidth;
+
       const animation = () => {
         animId = requestAnimationFrame(animation);
 
-        popup.style.display = 'block';
         if (opacity < 1) {
           opacity += 0.02;
           popup.style.opacity = opacity;
@@ -121,9 +121,13 @@ window.addEventListener('DOMContentLoaded', () => {
       }
 
       popup.style.opacity = 0;
+      popup.style.display = 'block';
 
       if (screenWidth > 768) {
         requestAnimationFrame(animation);
+      } else {
+        opacity = 1;
+        popup.style.opacity = opacity;
       }
     };
 
@@ -135,6 +139,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     btnClose.addEventListener('click', () => {
+      opacity = 0;
       popup.style.opacity = 0;
       popup.style.display = 'none';
     });
