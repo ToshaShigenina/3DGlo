@@ -147,7 +147,29 @@ window.addEventListener('DOMContentLoaded', () => {
 
   togglePopUp();
 
+  /* scroll */
+  const smoothScroll = () => {
+    const menu = document.querySelector('menu');
 
+    menu.addEventListener('click', (event) => {
+      event.preventDefault();
+      let target = event.target.closest('li>a[href^="#"]');
+
+      if (!target) {
+        return;
+      }
+
+      let elemId = target.getAttribute('href').slice(1);
+
+      document.getElementById(elemId).scrollIntoView({
+        block: "start",
+        behavior: "smooth"
+      });
+
+    });
+  };
+
+  smoothScroll();
 
 
 
