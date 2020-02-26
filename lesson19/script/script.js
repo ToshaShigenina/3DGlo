@@ -55,20 +55,36 @@ window.addEventListener('DOMContentLoaded', () => {
     };
 
     document.body.addEventListener('click', (event) => {
-      let target = event.target.closest('.menu');
+      let target = event.target.closest('.menu') || event.target.closest('menu');
 
-      if (target) {
-        handlerMenu();
+      if (!target) {
+        return;
       }
+
+      if (target.classList.contains('menu')) {
+        handlerMenu();
+      } else {
+        target = target.closest('a');
+        if (target) {
+          handlerMenu();
+        }
+      }
+
+
+      /*      let target = event.target.closest('.menu');
+
+            if (target) {
+              
+            }*/
     });
 
-    menu.addEventListener('click', (event) => {
-      let target = event.target.closest('a');
+    /*    menu.addEventListener('click', (event) => {
+          let target = event.target.closest('a');
 
-      if (target) {
-        handlerMenu();
-      }
-    });
+          if (target) {
+            handlerMenu();
+          }
+        });*/
   };
 
   toggleMenu();
@@ -96,7 +112,7 @@ window.addEventListener('DOMContentLoaded', () => {
           opacity = 0;
           cancelAnimationFrame(animId);
         }
-      }
+      };
 
       popup.style.opacity = 0;
       popup.style.display = 'block';
