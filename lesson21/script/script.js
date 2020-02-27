@@ -56,7 +56,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
     document.body.addEventListener('click', (event) => {
       let target = event.target.closest('.menu') || event.target.closest('menu');
-      console.log(target);
 
       if (!target && menu.classList.contains('active-menu')) {
         handlerMenu();
@@ -311,5 +310,33 @@ window.addEventListener('DOMContentLoaded', () => {
   };
 
   slider();
+
+  const changeImg = () => {
+    const command = document.querySelector('.command');
+    let src = '';
+
+    command.addEventListener('mouseover', (event) => {
+      let target = event.target.closest('img.command__photo');
+
+      if (!target) {
+        return;
+      }
+
+      src = target.src;
+      target.src = target.dataset.img;
+    });
+
+    command.addEventListener('mouseout', (event) => {
+      let target = event.target.closest('img.command__photo');
+
+      if (!target) {
+        return;
+      }
+
+      target.src = src;
+    });
+  };
+
+  changeImg();
 
 });
