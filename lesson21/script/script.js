@@ -316,27 +316,39 @@ window.addEventListener('DOMContentLoaded', () => {
     let src = '';
 
     command.addEventListener('mouseover', (event) => {
-      let target = event.target.closest('img.command__photo');
+      let target = event.target;
 
-      if (!target) {
-        return;
+      if (target.matches('img.command__photo')) {
+        src = target.src;
+        target.src = target.dataset.img;
       }
-
-      src = target.src;
-      target.src = target.dataset.img;
     });
 
     command.addEventListener('mouseout', (event) => {
-      let target = event.target.closest('img.command__photo');
+      let target = event.target;
 
-      if (!target) {
-        return;
+      if (target.matches('img.command__photo')) {
+        target.src = src;
       }
-
-      target.src = src;
     });
   };
 
   changeImg();
+
+  // check input
+
+  const calcCheckInput = () => {
+    const calc = document.querySelector('.calc-block');
+
+    calc.addEventListener('input', (event) => {
+      let target = event.target;
+
+      if (target.matches('input')) {
+        target.value = target.value.replace(/[\D]/, '');
+      }
+    });
+  };
+
+  calcCheckInput();
 
 });
