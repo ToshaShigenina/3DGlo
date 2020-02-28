@@ -354,7 +354,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // calc
   const calc = (price = 100) => {
     const calcBlock = document.querySelector('.calc-block'),
-      calcType = document.querySelecrot('.calc-type'),
+      calcType = document.querySelector('.calc-type'),
       calcSquare = document.querySelector('.calc-square'),
       calcDay = document.querySelector('.calc-day'),
       calcCount = document.querySelector('.calc-count'),
@@ -362,8 +362,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const countSum = () => {
       let total = 0,
-        countValue = 0,
+        countValue = 1,
         dayValue = 1;
+
       const typeValue = calcType.options[calcType.selectedIndex].value,
         squareValue = +calcSquare.value;
 
@@ -372,13 +373,13 @@ window.addEventListener('DOMContentLoaded', () => {
       }
 
       if (calcDay.value && calcDay.value < 5) {
-        dayValue += 2;
+        dayValue *= 2;
       } else if (calcDay.value && calcDay.value < 10) {
         dayValue *= 1.5;
       }
 
       if (typeValue && squareValue) {
-        total = price * typeValue * squareValue;
+        total = price * typeValue * squareValue * countValue * dayValue;
       }
 
       totalValue.textContent = total;
@@ -396,6 +397,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
   };
 
-  calc();
+  calc(100);
 
 });
