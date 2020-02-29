@@ -360,6 +360,10 @@ window.addEventListener('DOMContentLoaded', () => {
       calcCount = document.querySelector('.calc-count'),
       totalValue = document.getElementById('total');
 
+    let animValue = 0,
+      animId = 0;
+
+
     const countSum = () => {
       let total = 0,
         countValue = 1,
@@ -367,6 +371,36 @@ window.addEventListener('DOMContentLoaded', () => {
 
       const typeValue = calcType.options[calcType.selectedIndex].value,
         squareValue = +calcSquare.value;
+
+      const totalAnimationDec = () => {
+        animId = requestAnimationFrame(totalAnimationDec);
+
+        if (animValue > total && ((animValue - total) / 10) > 5) {
+          animValue -= (animValue - total) / 10;
+          totalValue.textContent = Math.floor(animValue);
+          console.log(total, animValue);
+        } else {
+          totalValue.textContent = total;
+          animValue = total;
+          cancelAnimationFrame(animId);
+          console.log(1);
+        }
+      };
+
+      const totalAnimationInc = () => {
+        animId = requestAnimationFrame(totalAnimationInc);
+
+        if (animValue < total && ((total - animValue) / 10) > 5) {
+          animValue += (total - animValue) / 10;
+          totalValue.textContent = Math.floor(animValue);
+          console.log(total, animValue);
+        } else {
+          totalValue.textContent = total;
+          animValue = total;
+          cancelAnimationFrame(animId);
+          console.log(1);
+        }
+      };
 
       if (calcCount.value > 1) {
         countValue += (calcCount.value - 1) / 10;
@@ -380,9 +414,16 @@ window.addEventListener('DOMContentLoaded', () => {
 
       if (typeValue && squareValue) {
         total = price * typeValue * squareValue * countValue * dayValue;
+        if (total > animValue) {
+          requestAnimationFrame(totalAnimationInc);
+        } else {
+          requestAnimationFrame(totalAnimationDec);
+        }
+
       }
 
-      totalValue.textContent = total;
+      //totalValue.textContent = total;
+
     };
 
     calcBlock.addEventListener('change', (event) => {
