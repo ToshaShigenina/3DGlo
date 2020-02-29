@@ -373,34 +373,29 @@ window.addEventListener('DOMContentLoaded', () => {
         squareValue = +calcSquare.value;
 
       const totalAnimationDec = () => {
-        animId = requestAnimationFrame(totalAnimationDec);
+          animId = requestAnimationFrame(totalAnimationDec);
 
-        if (animValue > total && ((animValue - total) / 10) > 5) {
-          animValue -= (animValue - total) / 10;
-          totalValue.textContent = Math.floor(animValue);
-          console.log(total, animValue);
-        } else {
-          totalValue.textContent = total;
-          animValue = total;
-          cancelAnimationFrame(animId);
-          console.log(1);
-        }
-      };
+          if (animValue > total && ((animValue - total) / 10) > 10) {
+            animValue -= (animValue - total) / 10;
+            totalValue.textContent = Math.floor(animValue);
+          } else {
+            totalValue.textContent = total;
+            animValue = total;
+            cancelAnimationFrame(animId);
+          }
+        },
+        totalAnimationInc = () => {
+          animId = requestAnimationFrame(totalAnimationInc);
 
-      const totalAnimationInc = () => {
-        animId = requestAnimationFrame(totalAnimationInc);
-
-        if (animValue < total && ((total - animValue) / 10) > 5) {
-          animValue += (total - animValue) / 10;
-          totalValue.textContent = Math.floor(animValue);
-          console.log(total, animValue);
-        } else {
-          totalValue.textContent = total;
-          animValue = total;
-          cancelAnimationFrame(animId);
-          console.log(1);
-        }
-      };
+          if (animValue < total && ((total - animValue) / 10) > 10) {
+            animValue += (total - animValue) / 10;
+            totalValue.textContent = Math.floor(animValue);
+          } else {
+            totalValue.textContent = total;
+            animValue = total;
+            cancelAnimationFrame(animId);
+          }
+        };
 
       if (calcCount.value > 1) {
         countValue += (calcCount.value - 1) / 10;
@@ -419,10 +414,7 @@ window.addEventListener('DOMContentLoaded', () => {
         } else {
           requestAnimationFrame(totalAnimationDec);
         }
-
       }
-
-      //totalValue.textContent = total;
 
     };
 
@@ -433,8 +425,6 @@ window.addEventListener('DOMContentLoaded', () => {
         countSum();
       }
     });
-
-
 
   };
 
