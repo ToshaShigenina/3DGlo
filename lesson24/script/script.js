@@ -441,10 +441,24 @@ window.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('form1');
 
     const statusMessage = document.createElement('div');
-    statusMessage.textContent = 'jhiujhi';
+    statusMessage.style.cssText = 'font-size: 2rem;';
 
-    form.append(statusMessage);
 
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      form.append(statusMessage);
+
+      const request = new XMLHttpRequest();
+      request.open('POST', '../lesson24/server.php');
+      request.setRequestHeader('Content-Type', 'multipart/form-data');
+
+      const formData = new FormData(form);
+
+      request.send(formData);
+
+
+
+    });
 
   };
 
