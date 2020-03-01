@@ -449,15 +449,28 @@ window.addEventListener('DOMContentLoaded', () => {
       form.append(statusMessage);
 
       const request = new XMLHttpRequest();
-      request.open('POST', '../lesson24/server.php');
+
+      request.addEventListener('readystatechange', () => {
+        statusMessage.textContent = loadMessage;
+
+        if (request.readyState !== 4) {
+          return;
+        }
+
+        if (request.status === 200) {
+          statusMessage.textContent = successMessage;
+
+        } else {
+          statusMessage.textContent = errorMessage;
+        }
+      });
+
+      request.open('POST', './server.php');
       request.setRequestHeader('Content-Type', 'multipart/form-data');
 
       const formData = new FormData(form);
 
       request.send(formData);
-
-
-
     });
 
   };
