@@ -444,22 +444,29 @@ window.addEventListener('DOMContentLoaded', () => {
     statusMessage.style.cssText = 'font-size: 2rem;';
 
     const postData = (body, outputData, errorData) => {
-      const request = new XMLHttpRequest();
-      request.addEventListener('readystatechange', () => {
-        if (request.readyState !== 4) {
-          return;
-        }
-        if (request.status === 200) {
-          outputData();
-        } else {
-          errorData(request.status);
-        }
-      });
+        const request = new XMLHttpRequest();
+        request.addEventListener('readystatechange', () => {
+          if (request.readyState !== 4) {
+            return;
+          }
+          if (request.status === 200) {
+            outputData();
+          } else {
+            errorData(request.status);
+          }
+        });
 
-      request.open('POST', './server.php');
-      request.setRequestHeader('Content-Type', 'application/json');
-      request.send(JSON.stringify(body));
-    };
+        request.open('POST', './server.php');
+        request.setRequestHeader('Content-Type', 'application/json');
+        request.send(JSON.stringify(body));
+      },
+      clearInput = () => {
+        [...form.elements].forEach((elem) => {
+          if (elem.matches('input')) {
+            elem.value = '';
+          }
+        });
+      };
 
     form.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -478,6 +485,8 @@ window.addEventListener('DOMContentLoaded', () => {
         statusMessage.textContent = errorMessage;
         console.error(error);
       });
+
+      clearInput();
     });
 
   };
