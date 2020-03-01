@@ -466,11 +466,16 @@ window.addEventListener('DOMContentLoaded', () => {
       });
 
       request.open('POST', './server.php');
-      request.setRequestHeader('Content-Type', 'multipart/form-data');
+      request.setRequestHeader('Content-Type', 'application/json');
 
       const formData = new FormData(form);
+      let body = {};
 
-      request.send(formData);
+      formData.forEach((val, key) => {
+        body[key] = val;
+      });
+
+      request.send(JSON.stringify(body));
     });
 
   };
