@@ -352,6 +352,7 @@ window.addEventListener('DOMContentLoaded', () => {
   calcCheckInput();
 
   // calc
+
   const calc = (price = 100) => {
     const calcBlock = document.querySelector('.calc-block'),
       calcType = document.querySelector('.calc-type'),
@@ -429,5 +430,24 @@ window.addEventListener('DOMContentLoaded', () => {
   };
 
   calc(100);
+
+  // send ajax form
+
+  const sendForm = () => {
+    const errorMessage = "Что-то пошло не так...",
+      loadMessage = "Загрузка...",
+      successMessage = 'Спасибо! Мы скоро с вами свяжемся!';
+
+    const form = document.getElementById('form1');
+
+    const statusMessage = document.createElement('div');
+    statusMessage.textContent = 'jhiujhi';
+
+    form.append(statusMessage);
+
+
+  };
+
+  sendForm();
 
 });
