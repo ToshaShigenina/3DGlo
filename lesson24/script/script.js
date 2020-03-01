@@ -438,7 +438,9 @@ window.addEventListener('DOMContentLoaded', () => {
       loadMessage = "Загрузка...",
       successMessage = 'Спасибо! Мы скоро с вами свяжемся!';
 
-    const form = document.getElementById('form1');
+    const form1 = document.getElementById('form1'),
+      form2 = document.getElementById('form2'),
+      form3 = document.getElementById('form3');
 
     const statusMessage = document.createElement('div');
     statusMessage.style.cssText = 'font-size: 2rem;';
@@ -460,33 +462,45 @@ window.addEventListener('DOMContentLoaded', () => {
         request.setRequestHeader('Content-Type', 'application/json');
         request.send(JSON.stringify(body));
       },
-      clearInput = () => {
+      clearInput = (form) => {
         [...form.elements].forEach((elem) => {
           if (elem.matches('input')) {
             elem.value = '';
           }
         });
+      },
+      readForm = (form, event) => {
+        console.log(event);
+        event.preventDefault();
+        form.append(statusMessage);
+        statusMessage.textContent = loadMessage;
+        const formData = new FormData(form);
+        let body = {};
+
+        formData.forEach((val, key) => {
+          body[key] = val;
+        });
+
+        postData(body, () => {
+          statusMessage.textContent = successMessage;
+        }, (error) => {
+          statusMessage.textContent = errorMessage;
+          console.error(error);
+        });
+
+        clearInput(form);
       };
 
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      form.append(statusMessage);
-      statusMessage.textContent = loadMessage;
-      const formData = new FormData(form);
-      let body = {};
+    form1.addEventListener('submit', (event) => {
+      readForm(form1, event);
+    });
 
-      formData.forEach((val, key) => {
-        body[key] = val;
-      });
+    form2.addEventListener('submit', (event) => {
+      readForm(form2, event);
+    });
 
-      postData(body, () => {
-        statusMessage.textContent = successMessage;
-      }, (error) => {
-        statusMessage.textContent = errorMessage;
-        console.error(error);
-      });
-
-      clearInput();
+    form2.addEventListener('submit', (event) => {
+      readForm(form2, event);
     });
 
   };
