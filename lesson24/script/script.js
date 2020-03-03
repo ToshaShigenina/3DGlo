@@ -340,8 +340,10 @@ window.addEventListener('DOMContentLoaded', () => {
   const checkInput = (elemParent, reg, selector = 'input') => {
     elemParent.addEventListener('input', (event) => {
       let target = event.target;
+      console.log(reg);
 
       if (target.matches(selector)) {
+        console.log(selector);
         target.value = target.value.replace(reg, '');
       }
     });
@@ -441,12 +443,19 @@ window.addEventListener('DOMContentLoaded', () => {
       form2 = document.getElementById('form2'),
       form3 = document.getElementById('form3');
 
-    checkInput(form1, /\+\d{10}/, 'input[name="user_phone"]');
-    checkInput(form2, /\+\d{10}/, 'input[name="user_phone"]');
-    checkInput(form3, /\+\d{10}/, 'input[name="user_phone"]');
+    checkInput(form1, /[^\+\d]/, 'input[name="user_phone"]');
+    checkInput(form1, /[^А-Яа-яЁё\ ]/, 'input[name="user_name"]');
+
+    checkInput(form2, /[^\+\d]/, 'input[name="user_phone"]');
+    checkInput(form2, /[^А-Яа-яЁё\ ]/, 'input[name="user_name"]');
+    checkInput(form2, /[^А-Яа-яЁё\ \.\,\-]/, 'input[name="user_message"]');
+
+    checkInput(form3, /[^\+\d]/, 'input[name="user_phone"]');
+    checkInput(form3, /[^А-Яа-яЁё\ ]/, 'input[name="user_name"]');
+
 
     const statusMessage = document.createElement('div');
-    statusMessage.style.cssText = 'font-size: 2rem;';
+    statusMessage.style.cssText = 'font-size: 2rem; color: #fff;';
 
     const postData = (body, outputData, errorData) => {
         const request = new XMLHttpRequest();
