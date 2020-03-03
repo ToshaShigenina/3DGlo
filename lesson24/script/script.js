@@ -337,11 +337,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // check input
 
-  const calcCheckInput = (elem, reg) => {
-    elem.addEventListener('input', (event) => {
+  const checkInput = (elemParent, reg, selector = 'input') => {
+    elemParent.addEventListener('input', (event) => {
       let target = event.target;
 
-      if (target.matches('input')) {
+      if (target.matches(selector)) {
         target.value = target.value.replace(reg, '');
       }
     });
@@ -358,7 +358,7 @@ window.addEventListener('DOMContentLoaded', () => {
       calcCount = document.querySelector('.calc-count'),
       totalValue = document.getElementById('total');
 
-    calcCheckInput(calcBlock, /[\D]/);
+    checkInput(calcBlock, /[\D]/);
 
     let animValue = 0,
       animId = 0;
@@ -441,6 +441,10 @@ window.addEventListener('DOMContentLoaded', () => {
       form2 = document.getElementById('form2'),
       form3 = document.getElementById('form3');
 
+    checkInput(form1, /\+\d{10}/, 'input[name="user_phone"]');
+    checkInput(form2, /\+\d{10}/, 'input[name="user_phone"]');
+    checkInput(form3, /\+\d{10}/, 'input[name="user_phone"]');
+
     const statusMessage = document.createElement('div');
     statusMessage.style.cssText = 'font-size: 2rem;';
 
@@ -498,8 +502,8 @@ window.addEventListener('DOMContentLoaded', () => {
       readForm(form2, event);
     });
 
-    form2.addEventListener('submit', (event) => {
-      readForm(form2, event);
+    form3.addEventListener('submit', (event) => {
+      readForm(form3, event);
     });
 
   };
