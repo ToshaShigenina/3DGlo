@@ -340,10 +340,8 @@ window.addEventListener('DOMContentLoaded', () => {
   const checkInput = (elemParent, reg, selector = 'input') => {
     elemParent.addEventListener('input', (event) => {
       let target = event.target;
-      console.log(reg);
 
       if (target.matches(selector)) {
-        console.log(selector);
         target.value = target.value.replace(reg, '');
       }
     });
