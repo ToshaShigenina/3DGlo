@@ -337,19 +337,16 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // check input
 
-  const calcCheckInput = () => {
-    const calc = document.querySelector('.calc-block');
-
-    calc.addEventListener('input', (event) => {
+  const calcCheckInput = (elem, reg) => {
+    elem.addEventListener('input', (event) => {
       let target = event.target;
 
       if (target.matches('input')) {
-        target.value = target.value.replace(/[\D]/, '');
+        target.value = target.value.replace(reg, '');
       }
     });
   };
 
-  calcCheckInput();
 
   // calc
 
@@ -360,6 +357,8 @@ window.addEventListener('DOMContentLoaded', () => {
       calcDay = document.querySelector('.calc-day'),
       calcCount = document.querySelector('.calc-count'),
       totalValue = document.getElementById('total');
+
+    calcCheckInput(calcBlock, /[\D]/);
 
     let animValue = 0,
       animId = 0;
