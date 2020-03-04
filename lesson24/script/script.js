@@ -446,7 +446,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     checkInput(form2, /[^\+\d]/, 'input[name="user_phone"]');
     checkInput(form2, /[^А-Яа-яЁё\ ]/, 'input[name="user_name"]');
-    checkInput(form2, /[^А-Яа-яЁё\ \.\,\-]/, 'input[name="user_message"]');
+    checkInput(form2, /[^А-Яа-яЁё\ ]/, 'input[name="user_message"]');
 
     checkInput(form3, /[^\+\d]/, 'input[name="user_phone"]');
     checkInput(form3, /[^А-Яа-яЁё\ ]/, 'input[name="user_name"]');
@@ -480,7 +480,7 @@ window.addEventListener('DOMContentLoaded', () => {
         });
       },
       readForm = (form, event) => {
-        console.log(event);
+
         event.preventDefault();
         form.append(statusMessage);
         statusMessage.textContent = loadMessage;
@@ -495,7 +495,7 @@ window.addEventListener('DOMContentLoaded', () => {
           statusMessage.textContent = successMessage;
         }, (error) => {
           statusMessage.textContent = errorMessage;
-          console.error(error);
+
         });
 
         clearInput(form);
