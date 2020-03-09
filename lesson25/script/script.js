@@ -482,7 +482,6 @@ window.addEventListener('DOMContentLoaded', () => {
         });
       },
       readForm = (form, event) => {
-
         event.preventDefault();
         form.append(statusMessage);
         statusMessage.textContent = loadMessage;
@@ -499,8 +498,9 @@ window.addEventListener('DOMContentLoaded', () => {
           })
           .catch((error) => {
             statusMessage.textContent = errorMessage;
-          })
-          .finally(clearInput);
+          });
+
+        clearInput(form)
       };
 
     form1.addEventListener('submit', (event) => {
