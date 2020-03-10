@@ -309,7 +309,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
   };
 
-  //slider();
+  slider();
+
+  // hover image
 
   const changeImg = () => {
     const command = document.querySelector('.command');
