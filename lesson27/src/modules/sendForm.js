@@ -7,6 +7,16 @@ const sendForm = () => {
     form2 = document.getElementById('form2'),
     form3 = document.getElementById('form3');
 
+  const checkInput = (elemParent, reg, selector = 'input') => {
+    elemParent.addEventListener('input', (event) => {
+      let target = event.target;
+
+      if (target.matches(selector)) {
+        target.value = target.value.replace(reg, '');
+      }
+    });
+  };
+
   checkInput(form1, /[^\+\d]/, 'input[name="user_phone"]');
   checkInput(form1, /[^А-Яа-яЁё\ ]/, 'input[name="user_name"]');
 

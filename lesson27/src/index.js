@@ -7,9 +7,9 @@ import smoothScroll from './modules/smoothScroll';
 import tabs from './modules/tabs';
 import slider from './modules/slider';
 import changeImg from './modules/changeImage';
+//import checkInput from './modules/checkInput';
 import calc from './modules/calc';
 import sendForm from './modules/sendForm';
-import checkInput from './modules/checkInput';
 
 
 
