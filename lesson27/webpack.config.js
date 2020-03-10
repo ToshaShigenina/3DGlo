@@ -1,6 +1,6 @@
 const path = require('path');
 
-module.exports = {
+module.export = {
   entry: {
     main: './src/index.js'
   },
