@@ -6,7 +6,7 @@ import 'nodelist-foreach-polyfill';
 import 'formdata-polyfill';
 import 'es6-promise';
 import 'fetch-polyfill';
-import requestanimationframe from 'requestanimationframe';
+import 'requestanimationframe';
 import elementClosest from 'element-closest';
 
 import countTimer from './modules/countTimer';
@@ -20,7 +20,6 @@ import changeImg from './modules/changeImage';
 import calc from './modules/calc';
 import sendForm from './modules/sendForm';
 
-requestanimationframe(window);
 elementClosest(window);
 
 //timer
