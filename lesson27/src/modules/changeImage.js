@@ -19,3 +19,5 @@ const changeImg = () => {
     }
   });
 };
+
+export default changeImg;

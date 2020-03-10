@@ -7,3 +7,5 @@ const checkInput = (elemParent, reg, selector = 'input') => {
     }
   });
 };
+
+export default checkInput;

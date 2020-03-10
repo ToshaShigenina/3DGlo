@@ -38,3 +38,5 @@ const countTimer = () => {
 
   setInterval(updateClock, 1000);
 };
+
+export default countTimer;
