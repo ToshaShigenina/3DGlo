@@ -66,7 +66,7 @@ const calc = (price = 100) => {
     }
 
     if (typeValue && squareValue) {
-      total = Math.ceil(price * typeValue * squareValue * countValue * dayValue);
+      total = Math.round(price * typeValue * squareValue * countValue * dayValue);
       if (total > animValue) {
         requestAnimationFrame(totalAnimationInc);
       } else {

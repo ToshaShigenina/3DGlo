@@ -70,6 +70,10 @@ const sendForm = () => {
         });
 
       clearInput(form);
+
+      setTimeout(() => {
+        statusMessage.remove();
+      }, 6000);
     };
 
   form1.addEventListener('submit', (event) => {
