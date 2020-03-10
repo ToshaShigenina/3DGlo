@@ -1,0 +1,37 @@
+'use strict';
+
+//timer
+
+countTimer();
+
+//menu
+
+toggleMenu();
+
+//popup
+
+togglePopUp();
+
+/* scroll */
+
+smoothScroll();
+
+// tab
+
+tabs();
+
+// slider
+
+slider();
+
+// hover image
+
+changeImg();
+
+// calc
+
+calc(100);
+
+// send ajax form
+
+sendForm();
